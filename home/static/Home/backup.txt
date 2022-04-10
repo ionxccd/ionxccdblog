@@ -1,0 +1,312 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    text-overflow: ellipsis;
+}
+
+html, body {
+    background-color: rgb(199, 197, 197);
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+
+h1{
+    color: blue;
+    width: fit-content;
+    flex: 1;
+}
+
+.headerBorder{
+    padding: 15px;
+    background-color: grey;
+    display: flex;
+    justify-content: space-between;
+    font-size: 30px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.videoBox{
+    align-items: center;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 40px 30px;
+    place-items: center;
+}
+
+.videoContainer{
+    align-items: center;
+    padding-bottom: 20px;
+    font-size: 10px;
+    text-align: center;
+    margin: 10px;
+    width:300px;
+    height: 180px;
+}
+
+#searchBox{
+    width: 350px;
+    height: 30px;
+    margin : 0 auto;
+    vertical-align: middle;
+}
+
+#searchButton{
+    width: 75px;
+    height: 35px;
+    vertical-align: middle;
+}
+
+#createButton{
+    width:fit-content;
+    height: 30px;
+    margin : 0 auto;
+    vertical-align:middle;
+    margin: auto;
+    text-indent: 100%;
+    color: white;
+}
+
+#title{
+    display: table-cell;
+    width: 1px;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+#titleStyle{
+    font-size: 1px;
+    text-align: center;
+    white-space: nowrap;
+    overflow-y: auto;
+    height: 1.2em;
+    width: 260px;
+    text-decoration: none;
+}
+
+.searchHeader{
+    margin: 0;
+    padding: 0;
+    flex: 1;
+    max-width: 50%;
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 25px;
+}
+
+.nav-link{
+    display: inline-block;
+}
+
+div.name { display: table;
+    margin: 4px;
+    padding: 1px;
+    float: center;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+div.t {
+    display: table-cell;
+}
+
+div.t > input {
+    width: 100%;
+    margin: 1px;
+}
+
+#thumbnailStyle{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+#videoPlayerStyle{
+    width: 640px;
+    height: 400px;
+    background-color: black;
+}
+
+.desriptionStyle{
+    white-space: pre;
+    line-height: normal;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+  
+  /* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+@media all and (max-width: 699px) and (min-width: 520px) { /*The following CSS runs only for displays with a width (in pixels) of more than 800px*/
+    body {
+        width: 100%;
+        background-color: red;
+    }
+}
+
+@media all and (max-width: 699px) and (min-width: 520px) { /*The following CSS runs only for displays with a width (in pixels) of less than 800px*/
+    body {
+        width: 80%;
+        background-color: blue;
+    }
+}
+
+    </style>
+    <script type="text/javascript">
+        var vid,  playbtn, seekslider, curtimetext, durtimetext, mutebtn, volumeslider, fullscreenbtn;
+            function intializePlayer () {
+            // Set object references
+                    vid = document.getElementById ("my_video");
+                    playbtn = document.getElementById ("playpausebtn");
+                    seekslider = document.getElementById ("seekslider");
+                    curtimetext = document.getElementById ("curtimetext");
+                    durtimetext = document.getElementById ("durtimetext");
+                    mutebtn = document.getElementById ("mutebtn");
+                    volumeslider = document.getElementById ("volumeslider");
+                    fullscreenbtn = document.getElementById ("fullscreenbtn");
+                    // Add event listeners
+                    playbtn.addEventListener("click",playPause,false);
+                    seekslider.addEventListener("change",vidSeek,false);
+                    vid.addEventListener("timeupdate",seektimeupdate,false);
+                    mutebtn.addEventListener("click",vidmute,false);
+                    volumeslider.addEventListener("change",setvolume,false);
+                    fullscreenbtn.addEventListener("click",toggleFullScreen,false);
+
+            }
+            window.onload = intializePlayer;
+
+            function playPause () {
+
+                if (vid.paused) {
+                vid.play();
+                playbtn.innerHTML = "Pause";
+                document.getElementById('playbtn').src = "pausebtn.png";
+                }else{
+                vid.pause();
+                playbtn.innerHTML = "Play"
+                document.getElementById('playbtn').src = "playbtn.png";
+                }
+            }
+            function vidSeek () {
+                // var video = document.getElementById('my_video')
+                // var seekbar = document.getElementById('seekslider')
+                // video.currentTime = seekbar.value;
+                var seekto = vid.duration * (seekslider.value / 100);
+                vid.currentTime = seekto;
+            }
+            function seektimeupdate () {
+                
+                var nt = vid.currentTime * (100 / vid.duration);
+                seekslider.value = nt;
+                var curmins = Math.floor (vid.currentTime / 60);
+                var cursecs = Math.floor (vid.currentTime - curmins * 60);
+                var durmins = Math.floor (vid.duration / 60);
+                var dursecs = Math.round(vid.duration - durmins * 60);
+                if(cursecs < 10){
+                    cursecs = "0"+cursecs;
+                }
+                if(dursecs < 10){
+                    dursecs = "0"+dursecs;
+                }
+                curtimetext.innerHTML = curmins+":"+cursecs;
+                durtimetext.innerHTML = durmins+":"+dursecs;
+            }
+            function vidmute(){
+            if (vid.muted) {
+            vid.muted = false;
+            mutebtn.innerHTML = "Mute";
+            volumeslider.value = 100
+            } else {
+            vid.muted = true;
+            mutebtn.innerHTML = "Unmute";
+                volumeslider.value =  0
+            }
+            }
+            function setvolume () {
+            vid.volume = volumeslider.value / 100;
+            }
+            function toggleFullScreen(){
+            if(vid.requestFullScreen) {
+                vid.requestFullScreen();
+                vid.removeAttribute("controls");
+                console.log('ok')
+            } else if(vid.webkitRequestFullScreen) {
+                vid.webkitRequestFullScreen();
+            } else if(vid.mozRequestFullScreen) {
+                vid.mozRequestFullScreen();
+            }
+            }
+    </script>
+    <style>
+        div#video_player_box{width:550px; background:#000; margin:0px auto;}
+        div#video_controls_bar{background: #333; padding:10px; color:#CCC;}
+        input#seekslider{ width:50px; }
+        input#volumeslider{width: 80px;}
+
+        .video_controls_bar{
+            text-align:center
+        }
+        input[type='range'] {
+            -webkit-appearance: none !important;
+            background: #000;
+            border:#666 1px solid;
+            height:4px;
+        }
+        /* input[type='range']::-webkit-slider-thumb {
+            video::-webkit-media-controls {
+                display:none !important;
+                background: #FFF;
+                height:15px;
+                width:15px;
+                border-radius:100%;
+                cursor:pointer;
+            }
+        } */
+    </style>
+    <script>
+        function OpenDesc() {
+            var T = document.getElementById('TestsDiv');
+            var Btn = document.getElementById('ButtonValues');
+            if (document.getElementById("TestsDiv").style.display == 'none'){
+                T.style.display = "block";
+                Btn.innerHTML = "Show Less";
+                
+            }else{
+                T.style.display = "none"
+                Btn.innerHTML = "Show More";
+            }
+        }
+    </script>
+
+    # return render(request, 'Home/AboutPage.html')
+
+    # if request.method == "POST":
+    #     form = SearchVideo(request.POST or None)
+    #     if form.is_valid():
+    #         conn = sqlite3.connect('db.sqlite3')
+    #         cursor = conn.cursor()
+    #         videTitle = form.cleaned_data.get('GuessTitle')
+    #         cursor.execute('SELECT * FROM Home_videoinfo WHERE VideoTitle LIKE ?', (videTitle + '%s',))
+    #         videoResult = [dict(VideoTitle=ra[1], VideoThumbnail=ra[3], VideoID=ra[8]) for ra in cursor.fetchall()]
+    #         print(videTitle)
+    #         return render(request, "Home/HeaderCode.html", {"videoInfos":videoResult, "form":form})
+    # else:
+    #     form = SearchVideo()

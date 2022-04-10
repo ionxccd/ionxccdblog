@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>{% block title %} Page Titles{% endblock%}</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel='stylesheet' type='text/css' media='screen' href="{% static 'Home/main.css' %}">
+</head>
+<body>
+    <div class="options-nav" id="myTopnav">
+      <h3 id="blog-title">xccd's blog</h3>
+      <a href="../../about/">About</a>
+      <a href="../../">Home</a>
+      <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+      </a>
+    </div>
+{% block content %}
+
+{% endblock %}
+</body>
+</html>

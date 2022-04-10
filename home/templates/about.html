@@ -1,0 +1,22 @@
+{% extends 'header.html' %}
+{% block title %}{{title}}{%endblock%}
+{% load static %}
+{% block content %}
+
+<div class="aboutStyle">
+  <br class="space" />
+  <img
+  src="{% static 'About/dumbdumbface.png' %}"
+  alt="ionxccd image"
+  class="bigdumbface"/>
+  <br>
+  <h2>Hello! My name is ionxccd</h2>
+  <h3>I am a novice programmer, <h3/>
+  <h3>and would appreciate any feedback</h3>
+  <br class="space"/>
+  <h3>Contact Me</h3>
+  <hr>
+  <a href="https://github.com/ionxccd">Github 🤖</a>
+  <a href="mailto:davidforpraise@gmail.com">Email 📧</a>
+</div>
+{% endblock %}
